@@ -12,6 +12,11 @@
 	compatible = "apple,d221", "apple,t8015", "apple,arm-platform";
 	model = "Apple iPhone X (GSM)";
 
+	/* m1n1 copies the ADT's Wi-Fi calibration (brcm,cal-blob) to this node. */
+	aliases {
+		wifi0 = &wifi0;
+	};
+
 	/* The BCM4357's REG_ON: SMC PMU GPIO 14 ("gP0e"), active-high. */
 	wlan_vdd: regulator-wlan-vdd {
 		compatible = "regulator-fixed";
@@ -33,6 +38,7 @@
 &port03 {
 	wifi0: wifi@0,0 {
 		compatible = "apple,d221-bcm4357-wifi", "pci14e4,440a";
+		brcm,board-type = "apple,herculesk";
 		reg = <0x10000 0x0 0x0 0x0 0x0>;
 		device-wake-gpios = <&pinctrl_ap 40 GPIO_ACTIVE_HIGH>;
 		vdd-supply = <&wlan_vdd>;
