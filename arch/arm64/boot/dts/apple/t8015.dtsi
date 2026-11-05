@@ -710,7 +710,7 @@
 		};
 
 		dart_apcie2: iommu@603008000 {
-			compatible = "apple,t8015-dart", "apple,s5l8960x-dart";
+			compatible = "apple,t8015-dart";
 			reg = <0x6 0x03008000 0x0 0x4000>;
 			#iommu-cells = <5>;
 			interrupt-parent = <&aic>;
@@ -724,7 +724,7 @@
 		};
 
 		dart_apcie3: iommu@604008000 {
-			compatible = "apple,t8015-dart", "apple,s5l8960x-dart";
+			compatible = "apple,t8015-dart";
 			reg = <0x6 0x04008000 0x0 0x4000>;
 			#iommu-cells = <5>;
 			interrupt-parent = <&aic>;
