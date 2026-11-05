@@ -108,6 +108,7 @@ struct apple_hidspi_ts {
 	bool powered;
 	bool input_ready;
 	unsigned int bootloader_seen;
+	unsigned int luna_seen;
 	struct work_struct recover;
 	struct completion booted;
 	struct completion surface;
@@ -598,6 +599,9 @@ static irqreturn_t ahts_irq(int irq, void *data)
 	else if (p[0] == HIDSPI_READ && p[1] == HIDSPI_DEV_TOUCH &&
 		 m[0] == HIDSPI_MSG_INPUT && m[1] == TOUCH_REPORT)
 		ahts_touch(ts, m + 8, mlen);
+	else if (ts->luna_seen++ < 30 || !(ts->luna_seen % 500))
+		dev_info(&ts->spi->dev, "other #%u: flags %#x dev %#x msg %*ph len %zu: %*ph\n",
+			 ts->luna_seen, p[0], p[1], 4, m, mlen, (int)min_t(size_t, mlen, 48), m + 8);
 	return IRQ_HANDLED;
 }
 
